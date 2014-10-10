@@ -9,6 +9,8 @@ int main()
     number0 = number0;
     number0.print();
 
+    std::cout << "\n" << number0 << "\n";
+
     //    number0.print();
 
 //    std::cout << "\n";
