@@ -7,16 +7,18 @@
 #include <deque>
 #include <iostream>
 #include <algorithm>
+#include <stdexcept>
+#include <cstring>
 #include "biguint.h"
 
 template<typename Iter>
 inline char* make_new_data(Iter first, Iter last)
 {
-    auto dest = new char[last - first + 1];
-    std::copy(first, last, dest);
-    dest[last - first] = '\0';
+    auto data = new char[last - first + 1];
+    std::copy(first, last, data);
+    data[last - first] = '\0';
 
-    return dest;
+    return data;
 }
 
 char* add_str_num(const std::string& lhs, const std::string& rhs)
@@ -54,6 +56,18 @@ char* add_str_num(const std::string& lhs, const std::string& rhs)
 
     char* new_data = make_new_data(sum.begin(), sum.end());
     return new_data;
+}
+
+inline bool
+operator <(const bigUInt& lhs, const bigUInt& rhs)
+{
+
+    auto l = strlen(lhs.get_p());
+    auto r = strlen(rhs.get_p());
+
+    return  l < r?  true    :
+                    (l > r? false   :
+                            (strcmp(lhs.get_p(),rhs.get_p()) < 0));
 }
 
 //! default Ctor
@@ -118,6 +132,16 @@ bigUInt bigUInt::operator+(const bigUInt &x)
     bigUInt ret{*this};
     ret.add(x);
     return ret;
+}
+
+bigUInt bigUInt::operator-(const bigUInt &x)
+{
+    if(*this < x)
+        throw std::runtime_error{"invalid subtraction"};
+
+
+
+    return x;
 }
 
 bigUInt& bigUInt::operator=(const bigUInt &x)

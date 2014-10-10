@@ -6,21 +6,7 @@ int main()
     bigUInt number0{"9"};
     bigUInt number1{"1001"};
 
-    number0 = number0;
-    number0.print();
-
-    std::cout << "\n" << number0 << "\n";
-
-    //    number0.print();
-
-//    std::cout << "\n";
-//    number0.add(number1);
-//    number0.increment();
-//    number0.print();
-
-//    bigUInt sum = number0 + number0;
-//    std::cout << "\n";
-//    sum.print();
+    auto sub = number0 - number1;
 
     std::cout << "\nexit normally\n";
     return 0;
