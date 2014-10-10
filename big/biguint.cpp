@@ -29,6 +29,22 @@ inline C operator +=(C& lhs, int rhs)
     return lhs;
 }
 
+template<typename Iter>
+std::ostream&
+print_without_leading_zero(Iter first, Iter last, std::ostream& out)
+{
+    auto non_zero = first;
+    for( ; non_zero != last && *non_zero == '0'; ++non_zero);
+
+    if(non_zero == last)
+        out << "0";
+    else
+        for(auto it = non_zero; it != last; ++it)
+            out << *it;
+
+    return out;
+}
+
 char* add_str_num(const std::string& lhs, const std::string& rhs)
 {
     std::deque<char> sum;
@@ -189,10 +205,12 @@ bigUInt& bigUInt::operator=(const bigUInt &x)
 
 void bigUInt::print()
 {
-    std::cout << p;
+    std::string buff{p};
+    print_without_leading_zero(buff.cbegin(),buff.cend(),std::cout);
 }
 
 std::ostream & operator<<(std::ostream &out, const bigUInt &x)
 {
-    return out << x.get_p();
+    std::string buff{x.get_p()};
+    return print_without_leading_zero(buff.cbegin(),buff.cend(),out);
 }
