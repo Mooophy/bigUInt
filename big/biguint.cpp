@@ -65,6 +65,10 @@ bigUInt::bigUInt(unsigned int n)
         *curr-- = digit;
 }
 
+/**
+ * @brief bigUInt::bigUInt
+ * @param const char *
+ */
 bigUInt::bigUInt(const char *s)
 {
     std::string buff(s);
@@ -78,6 +82,20 @@ bigUInt::bigUInt(const char *s)
     //! fill the rest
     for(auto digit : buff)
         *curr-- = digit;
+}
+
+/**
+ * @brief copy ctor
+ * @param x
+ */
+bigUInt::bigUInt(const bigUInt &x):
+    p(new char[size(x.get_p(), 'h')])
+{
+    auto sour = x.get_p();
+    auto dest = p;
+    while(*sour != 'h')
+        *dest++     =   *sour++;
+    *dest = 'h';
 }
 
 //! Dtor
