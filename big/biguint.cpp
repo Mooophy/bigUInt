@@ -119,6 +119,16 @@ bigUInt bigUInt::operator+(const bigUInt &x)
     return ret;
 }
 
+bigUInt& bigUInt::operator=(const bigUInt &x)
+{
+    std::string buff{x.get_p()};
+    char* new_data = make_new_data(buff.begin(), buff.end());
+    delete[] p;
+    p = new_data;
+
+    return *this;
+}
+
 void bigUInt::print()
 {
     std::cout << p;
