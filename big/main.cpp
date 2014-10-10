@@ -3,10 +3,12 @@
 
 int main()
 {
-    bigUInt number0{"9"};
-    bigUInt number1{"1001"};
+    bigUInt number0{"23"};
+    bigUInt number1{"1"};
 
     auto sub = number0 - number1;
+
+    sub.print();
 
     std::cout << "\nexit normally\n";
     return 0;

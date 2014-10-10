@@ -21,6 +21,14 @@ inline char* make_new_data(Iter first, Iter last)
     return data;
 }
 
+template<typename C>
+inline C operator +=(C& lhs, int rhs)
+{
+    for(auto& elem : lhs)
+        elem += rhs;
+    return lhs;
+}
+
 char* add_str_num(const std::string& lhs, const std::string& rhs)
 {
     std::deque<char> sum;
@@ -139,9 +147,34 @@ bigUInt bigUInt::operator-(const bigUInt &x)
     if(*this < x)
         throw std::runtime_error{"invalid subtraction"};
 
+    std::string lhs{get_p()};
+    std::string rhs{x.get_p()};
+    std::deque<char>  sub{};
+    lhs +=  -48;
+    rhs +=  -48;
 
+    auto l = lhs.end() - 1;
+    auto r = rhs.end() - 1;
+    char prev = 0, next = 0;
+    for (char digit_sub = 0; r != rhs.begin() - 1;    prev = next)
+    {
+        next        =   *l < (*r + prev)?    1   :   0;
+        digit_sub   =   next * 10   +   *l--    -   prev    -   *r--;
+        sub.push_front(digit_sub);
+    }
+    for (char digit_sub  = 0; l != lhs.begin() - 1;   prev = next)
+    {
+        next        =   *l < prev?    1   :   0;
+        digit_sub   =   next * 10   +   *l--    -   prev;
+        sub.push_front(digit_sub);
+    }
+    sub += 48;
 
-    return x;
+    auto new_data = make_new_data(sub.begin(), sub.end());
+    delete[] p;
+    p = new_data;
+
+    return *this;
 }
 
 bigUInt& bigUInt::operator=(const bigUInt &x)
