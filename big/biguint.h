@@ -8,6 +8,7 @@ public:
     bigUInt(const char *s);     //bigUInt d3("099999999999999999999");
     bigUInt(const bigUInt &x);  //copy constructor
     ~bigUInt();                 //destructor
+
     void add(unsigned int n);   //adds n to this: d1.add(64);
     void add(const bigUInt &x); //adds another number to this: d1.add(d2);
     void increment();           //adds 1 to this: d1.increment();
