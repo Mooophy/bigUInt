@@ -3,7 +3,6 @@
 //!         g++ -std=c++11 -Wall main.cpp
 
 #include <string>
-#include <cstring>
 #include <deque>
 #include <iostream>
 #include <algorithm>
@@ -55,11 +54,8 @@ void bigUInt::add(unsigned int n)
 {
     std::string lhs{p};
     std::string rhs{std::to_string(n)};
-
-//    std::cout << "lhs = " << lhs << std::endl;
-//    std::cout << "rhs = " << rhs << std::endl;
-
     std::deque<char> sum;
+
     auto l = lhs.end() - 1;
     auto r = rhs.end() - 1;
     unsigned carry = 0;
