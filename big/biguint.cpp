@@ -55,33 +55,39 @@ void bigUInt::add(unsigned int n)
 {
     std::string lhs{p};
     std::string rhs{std::to_string(n)};
+
+//    std::cout << "lhs = " << lhs << std::endl;
+//    std::cout << "rhs = " << rhs << std::endl;
+
     std::deque<char> sum;
-    auto l = lhs.end();
-    auto r = rhs.end();
+    auto l = lhs.end() - 1;
+    auto r = rhs.end() - 1;
     unsigned carry = 0;
     while( l != lhs.begin() - 1  &&  r != rhs.begin() - 1)
     {
-        unsigned digit_sum = *l++   +   *r++    +   carry   -   2 * 48;
-        sum.push_front(digit_sum >= 10? digit_sum - 10  :   digit_sum);
+        unsigned digit_sum = *l--   +   *r--    +   carry   -   2 * 48;
+        sum.push_front((digit_sum >= 10? digit_sum - 10  :   digit_sum) + 48);
         carry = digit_sum/10;
     }
 
     if(l == lhs.begin() - 1)    //left exausted
         while(r != rhs.begin() - 1)
         {
-            unsigned digit_sum  =   *r++    +   carry   -   48;
-            sum.push_front(digit_sum >= 10? digit_sum - 10  :   digit_sum);
+            unsigned digit_sum  =   *r--    +   carry   -   48;
+            sum.push_front((digit_sum >= 10? digit_sum - 10  :   digit_sum) + 48);
             carry = digit_sum/10;
         }
 
     if(r == rhs.begin() - 1)    //right exausted
         while(l != lhs.begin() - 1)
         {
-            unsigned digit_sum =    *l++    +   carry   -   48;
-            sum.push_front(digit_sum >= 10? digit_sum - 10  :   digit_sum);
+            unsigned digit_sum =    *l--    +   carry   -   48;
+            sum.push_front((digit_sum >= 10? digit_sum - 10  :   digit_sum) + 48);
             carry = digit_sum/10;
         }
 
+    if(carry)
+        sum.push_front(carry + 48);
 
     char* new_data = build_str(sum.begin(), sum.end());
     delete[] p;

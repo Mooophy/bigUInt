@@ -6,16 +6,12 @@
 
 int main()
 {
-    bigUInt number0("42");
-    bigUInt number1{number0};
-
-
-    number0.add(1);
+    bigUInt number0("9");
     number0.print();
+
     std::cout << "\n";
-    number1.print();
-    std::cout << "\n";
-    std::cout << number0;
+    number0.add(999999);
+    number0.print();
 
     std::cout << "\nexit normally\n";
     return 0;
