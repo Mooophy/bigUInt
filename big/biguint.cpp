@@ -9,7 +9,7 @@
 #include "biguint.h"
 
 template<typename Iter>
-inline char* build_str(Iter first, Iter last)
+inline char* make_new_data(Iter first, Iter last)
 {
     auto dest = new char[last - first + 1];
     std::copy(first, last, dest);
@@ -18,42 +18,8 @@ inline char* build_str(Iter first, Iter last)
     return dest;
 }
 
-//! default Ctor
-bigUInt::bigUInt():
-    p{new char[2]}
+char* add_str_num(std::string& lhs, std::string& rhs)
 {
-    p[0] = '0';
-    p[1] = '\0';
-}
-
-//! Dtor
-bigUInt::~bigUInt()
-{
-    delete[] p;
-}
-
-bigUInt::bigUInt(unsigned int n)
-{
-    std::string num {std::to_string(n)};
-    p = build_str(num.begin(), num.end());
-}
-
-bigUInt::bigUInt(const char *s)
-{
-    std::string num {s};
-    p = build_str(num.begin(), num.end());
-}
-
-bigUInt::bigUInt(const bigUInt &x)
-{
-    std::string num {x.get_p()};
-    p = build_str(num.begin(), num.end());
-}
-
-void bigUInt::add(unsigned int n)
-{
-    std::string lhs{p};
-    std::string rhs{std::to_string(n)};
     std::deque<char> sum;
 
     auto l = lhs.end() - 1;
@@ -85,7 +51,58 @@ void bigUInt::add(unsigned int n)
     if(carry)
         sum.push_front(carry + 48);
 
-    char* new_data = build_str(sum.begin(), sum.end());
+    char* new_data = make_new_data(sum.begin(), sum.end());
+    return new_data;
+}
+
+//! default Ctor
+bigUInt::bigUInt():
+    p{new char[2]}
+{
+    p[0] = '0';
+    p[1] = '\0';
+}
+
+//! Dtor
+bigUInt::~bigUInt()
+{
+    delete[] p;
+}
+
+bigUInt::bigUInt(unsigned int n)
+{
+    std::string num {std::to_string(n)};
+    p = make_new_data(num.begin(), num.end());
+}
+
+bigUInt::bigUInt(const char *s)
+{
+    std::string num {s};
+    p = make_new_data(num.begin(), num.end());
+}
+
+bigUInt::bigUInt(const bigUInt &x)
+{
+    std::string num {x.get_p()};
+    p = make_new_data(num.begin(), num.end());
+}
+
+void bigUInt::add(unsigned int n)
+{
+    std::string lhs{p};
+    std::string rhs{std::to_string(n)};
+    char* new_data = add_str_num(lhs,rhs);
+
+    delete[] p;
+    p = new_data;
+}
+
+void bigUInt::add(const bigUInt &x)
+{
+    std::string lhs{p};
+    std::string rhs{x.get_p()};
+    char* new_data = add_str_num(lhs,rhs);
+
     delete[] p;
     p = new_data;
 }
