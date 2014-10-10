@@ -39,7 +39,7 @@ how_many_digit(unsigned int num)
 }
 
 //! default Ctor
-inline bigUInt::bigUInt():
+bigUInt::bigUInt():
     p(new char[2])
 {
     p[0] = gen_digit(0);
@@ -65,13 +65,28 @@ bigUInt::bigUInt(unsigned int n)
         *curr-- = digit;
 }
 
+bigUInt::bigUInt(const char *s)
+{
+    std::string buff(s);
+
+    //! allocate p and set tail
+    p = new char[buff.size() + 1];
+    assert(p);
+    auto curr = p + buff.size();
+    *curr-- = 'h';
+
+    //! fill the rest
+    for(auto digit : buff)
+        *curr-- = digit;
+}
+
 //! Dtor
-inline bigUInt::~bigUInt()
+bigUInt::~bigUInt()
 {
     delete[] p;
 }
 
-inline std::ostream&
+std::ostream&
 operator<<(std::ostream &out, const bigUInt &x)
 {
     for(unsigned curr = size(x.get_p(), 'h'); curr != 0; --curr)
