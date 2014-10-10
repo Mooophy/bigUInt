@@ -104,10 +104,17 @@ bigUInt::~bigUInt()
     delete[] p;
 }
 
+void bigUInt::print()
+{
+    for(unsigned curr = size(p, 'h'); curr != 0; --curr)
+        std::cout << p[curr - 1];
+}
+
 std::ostream&
 operator<<(std::ostream &out, const bigUInt &x)
 {
     for(unsigned curr = size(x.get_p(), 'h'); curr != 0; --curr)
-        std::cout << x.get_p()[curr - 1];
+        out << x.get_p()[curr - 1];
+
     return out;
 }
