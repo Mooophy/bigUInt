@@ -18,7 +18,7 @@ inline char* make_new_data(Iter first, Iter last)
     return dest;
 }
 
-char* add_str_num(std::string& lhs, std::string& rhs)
+char* add_str_num(const std::string& lhs, const std::string& rhs)
 {
     std::deque<char> sum;
 
@@ -105,6 +105,18 @@ void bigUInt::add(const bigUInt &x)
 
     delete[] p;
     p = new_data;
+}
+
+void bigUInt::increment()
+{
+    add(1);
+}
+
+bigUInt bigUInt::operator+(const bigUInt &x)
+{
+    bigUInt ret{*this};
+    ret.add(x);
+    return ret;
 }
 
 void bigUInt::print()
