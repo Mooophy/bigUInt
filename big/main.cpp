@@ -4,7 +4,9 @@
 int main()
 {
     bigUInt number0{99999999};
-    bigUInt number1{"99999999"};
+    bigUInt number1{};
+
+    number1.print();
 
     auto sub = number0 - number1;
 

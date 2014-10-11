@@ -2,6 +2,8 @@
 //!         to compile :
 //!         g++ -std=c++11 -Wall main.cpp
 //!
+//! @test   tested on g++ 4.8.2
+//!
 
 #include <string>
 #include <deque>
@@ -108,24 +110,40 @@ bigUInt::~bigUInt()
     delete[] p;
 }
 
+/**
+ * @brief Ctor
+ * @param unsigned
+ */
 bigUInt::bigUInt(unsigned int n)
 {
     std::string num {std::to_string(n)};
     p = make_new_data(num.begin(), num.end());
 }
 
+/**
+ * @brief Ctor
+ * @param const char*
+ */
 bigUInt::bigUInt(const char *s)
 {
     std::string num {s};
     p = make_new_data(num.begin(), num.end());
 }
 
+/**
+ * @brief Ctor
+ * @param bigUInt
+ */
 bigUInt::bigUInt(const bigUInt &x)
 {
     std::string num {x.get_p()};
     p = make_new_data(num.begin(), num.end());
 }
 
+/**
+ * @brief add
+ * @param unsigned
+ */
 void bigUInt::add(unsigned int n)
 {
     std::string lhs{p};
@@ -136,6 +154,10 @@ void bigUInt::add(unsigned int n)
     p = new_data;
 }
 
+/**
+ * @brief add
+ * @param const bigUInt&
+ */
 void bigUInt::add(const bigUInt &x)
 {
     std::string lhs{p};
@@ -146,11 +168,19 @@ void bigUInt::add(const bigUInt &x)
     p = new_data;
 }
 
+/**
+ * @brief increment
+ */
 void bigUInt::increment()
 {
     add(1);
 }
 
+/**
+ * @brief operator +
+ * @param const bigUInt&
+ * @return bigUInt
+ */
 bigUInt bigUInt::operator+(const bigUInt &x)
 {
     bigUInt ret{*this};
@@ -158,6 +188,11 @@ bigUInt bigUInt::operator+(const bigUInt &x)
     return ret;
 }
 
+/**
+ * @brief operator -
+ * @param bigUInt
+ * @return bigUInt
+ */
 bigUInt bigUInt::operator-(const bigUInt &x)
 {
     if(*this < x)
@@ -193,6 +228,11 @@ bigUInt bigUInt::operator-(const bigUInt &x)
     return *this;
 }
 
+/**
+ * @brief copy assignment
+ * @param bigUInt
+ * @return bigUInt
+ */
 bigUInt& bigUInt::operator=(const bigUInt &x)
 {
     std::string buff{x.get_p()};
@@ -203,12 +243,21 @@ bigUInt& bigUInt::operator=(const bigUInt &x)
     return *this;
 }
 
+/**
+ * @brief print
+ */
 void bigUInt::print()
 {
     std::string buff{p};
     print_without_leading_zero(buff.cbegin(),buff.cend(),std::cout);
 }
 
+/**
+ * @brief operator <<
+ * @param out
+ * @param bigUInt
+ * @return out
+ */
 std::ostream & operator<<(std::ostream &out, const bigUInt &x)
 {
     std::string buff{x.get_p()};
