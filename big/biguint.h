@@ -29,4 +29,7 @@ private:
 
 std::ostream & operator<<(std::ostream &out, const bigUInt &x); //cout << d1;
 
+bigUInt factorial(unsigned n);
+
+
 #endif // bigUInt_H

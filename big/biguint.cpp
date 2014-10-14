@@ -263,3 +263,20 @@ std::ostream & operator<<(std::ostream &out, const bigUInt &x)
     std::string buff{x.get_p()};
     return print_without_leading_zero(buff.cbegin(),buff.cend(),out);
 }
+
+/**
+ * @brief factorial
+ * @param n
+ * @return
+ */
+bigUInt factorial(unsigned n)
+{
+    std::vector<bigUInt> results(n + 1,bigUInt{});
+    results[0] = bigUInt{1};
+    for(unsigned m = 1; m <= n; ++m)
+        for(unsigned k = m; k >= 1; --k)
+            for(unsigned i = 1; i <= k; ++i)
+                results[i] = results[i] + results[i - 1];
+
+    return results.back();
+}
